@@ -25,7 +25,7 @@
       text-align: center;
       color: #38bdf8;
       margin-bottom: 20px;
-    }10:30 AM 1/20/2026
+    }
     label {
       display: block;
       margin-top: 15px;
@@ -42,12 +42,9 @@
     textarea {
       resize: vertical;
     }
-    .radio-group {
-      margin-top: 5px;
-    }
     .radio-group input {
       width: auto;
-      margin-right: 5px;
+      margin-right: 6px;
     }
     button {
       margin-top: 20px;
@@ -63,11 +60,12 @@
     button:hover {
       background: #0ea5e9;
     }
-    .note {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #94a3b8;
+    .success {
+      display: none;
+      margin-top: 20px;
+      color: #22c55e;
       text-align: center;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -76,10 +74,15 @@
   <div class="container">
     <h1>CS Refresh Trip 2026</h1>
 
+    <!-- Hidden iframe to prevent redirect -->
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
     <form
+      id="tripForm"
       action="https://docs.google.com/forms/d/e/1FAIpQLSeQWykRbnDbfITjDQU3DZnPGTeGGHg_GGODThxM7e3V-fp8Ag/formResponse"
       method="POST"
-      target="_blank"
+      target="hidden_iframe"
+      onsubmit="handleSubmit()"
     >
 
       <label>Full Name</label>
@@ -97,13 +100,13 @@
       <label>Preferred Destination</label>
       <select name="entry.1116604285" required>
         <option value="">-- Select --</option>
-        <option value="natural">Natural place</option>
-        <option value="resort">Resort / Recreation</option>
-        <option value="historical">Historical place</option>
+        <option>Natural place</option>
+        <option>Resort / Recreation</option>
+        <option>Historical place</option>
       </select>
 
       <label>Preferred Activities</label>
-      <textarea name="entry.513316649" placeholder="Games, music, discussion, photos..."></textarea>
+      <textarea name="entry.513316649"></textarea>
 
       <label>Maximum Cost You Can Pay (ETB)</label>
       <input type="number" name="entry.1663040019">
@@ -118,10 +121,18 @@
       <button type="submit">Submit Response</button>
     </form>
 
-    <div class="note">
-      Responses will be collected to plan our class refresh trip.
+    <div class="success" id="successMsg">
+      ✅ Your response has been submitted successfully. Thank you!
     </div>
   </div>
-</body>
 
+  <script>
+    function handleSubmit() {
+      setTimeout(() => {
+        document.getElementById("tripForm").style.display = "none";
+        document.getElementById("successMsg").style.display = "block";
+      }, 500);
+    }
+  </script>
+</body>
 </html>
