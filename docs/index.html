@@ -74,28 +74,39 @@
     <input type="tel" name="entry.1404403395" required>
 
     <label>Do you agree with the trip idea?</label>
-    <input type="radio" name="entry.1964980061" value="Yes" required> Yes
-    <input type="radio" name="entry.1964980061" value="No"> No
+    <input type="radio" name="entry.1964980061" value="yes" required> Yes
+    <input type="radio" name="entry.1964980061" value="no"> No
 
-    <label>Preferred Destination(enter the place that preferable to trip )</label>
+    <label>Destination type</label>
+    <select name="entry.1116604285" required>
+      <option value="">-- Select --</option>
+      <option value="natural">Natural place</option>
+      <option value="resort">Resort</option>
+      <option value="historical">Historical</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label>Preferred Destination (write exact place)</label>
     <input type="text"
-      name="entry.1116604285"
-      placeholder="e.g langano,bishoftu"
-      required>
-    <label>Preferred Activities</label>
-    <textarea name="entry.513316649" placeholder="like games,discussion,music,photos"></textarea>
+           name="entry.768237246"
+           placeholder="e.g. Langano, Bishoftu"
+           required>
 
-    <label>Maximum Cost You Can Pay (ETB)</label>
+    <label>Preferred Activities</label>
+    <textarea name="entry.513316649"
+              placeholder="games, music, tennis, discussion..."></textarea>
+
+    <label>Maximum Cost (ETB)</label>
     <input type="number" name="entry.1663040019">
 
     <label>Preferred Day</label>
     <select name="entry.195751698">
+      <option>Saturday</option>
       <option>Sunday</option>
-      <option>monday</option>
-      <option>tuesday</option>
-      <option>wendesday</option>
-      <option>tuersday</option>
+      <option>Monday</option>
+      <option>Weekday</option>
     </select>
+
     <button type="submit">Submit Response</button>
   </form>
 
@@ -111,19 +122,18 @@
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const formData = new FormData(form);
-
     fetch(
       "https://docs.google.com/forms/d/e/1FAIpQLSeQWykRbnDbfITjDQU3DZnPGTeGGHg_GGODThxM7e3V-fp8Ag/formResponse",
       {
         method: "POST",
         mode: "no-cors",
-        body: formData
+        body: new FormData(form)
       }
-    ).then(() => {
-      form.style.display = "none";
-      successMsg.style.display = "block";
-    });
+    );
+
+    form.reset();
+    form.style.display = "none";
+    successMsg.style.display = "block";
   });
 </script>
 
