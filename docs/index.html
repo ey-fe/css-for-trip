@@ -39,13 +39,7 @@
       background: #1e293b;
       color: #e5e7eb;
     }
-    textarea {
-      resize: vertical;
-    }
-    .radio-group input {
-      width: auto;
-      margin-right: 6px;
-    }
+    textarea { resize: vertical; }
     button {
       margin-top: 20px;
       width: 100%;
@@ -56,9 +50,6 @@
       color: #020617;
       font-size: 16px;
       cursor: pointer;
-    }
-    button:hover {
-      background: #0ea5e9;
     }
     .success {
       display: none;
@@ -71,68 +62,70 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>CS Refresh Trip 2026</h1>
+<div class="container">
+  <h1>CS Refresh Trip 2026</h1>
 
-    <!-- Hidden iframe to prevent redirect -->
-    <iframe name="hidden_iframe" style="display:none;"></iframe>
+  <form id="tripForm">
 
-    <form
-      id="tripForm"
-      action="https://docs.google.com/forms/d/e/1FAIpQLSeQWykRbnDbfITjDQU3DZnPGTeGGHg_GGODThxM7e3V-fp8Ag/formResponse"
-      method="POST"
-      target="hidden_iframe"
-      onsubmit="handleSubmit()"
-    >
+    <label>Full Name</label>
+    <input type="text" name="entry.1147428280" required>
 
-      <label>Full Name</label>
-      <input type="text" name="entry.1147428280" required>
+    <label>Phone Number</label>
+    <input type="tel" name="entry.1404403395" required>
 
-      <label>Phone Number</label>
-      <input type="tel" name="entry.1404403395" required>
+    <label>Do you agree with the trip idea?</label>
+    <input type="radio" name="entry.1964980061" value="Yes" required> Yes
+    <input type="radio" name="entry.1964980061" value="No"> No
 
-      <label>Do you agree with the trip idea?</label>
-      <div class="radio-group">
-        <input type="radio" name="entry.1964980061" value="yes" required> Yes
-        <input type="radio" name="entry.1964980061" value="no"> No
-      </div>
+    <label>Preferred Destination(enter the place that preferable to trip )</label>
+    <input type="text"
+      name="entry.1116604285"
+      placeholder="e.g langano,bishoftu"
+      required>
+    <label>Preferred Activities</label>
+    <textarea name="entry.513316649" placeholder="like games,discussion,music,photos"></textarea>
 
-      <label>Preferred Destination</label>
-      <select name="entry.1116604285" required>
-        <option value="">-- Select --</option>
-        <option>Natural place</option>
-        <option>Resort / Recreation</option>
-        <option>Historical place</option>
-      </select>
+    <label>Maximum Cost You Can Pay (ETB)</label>
+    <input type="number" name="entry.1663040019">
 
-      <label>Preferred Activities</label>
-      <textarea name="entry.513316649"></textarea>
+    <label>Preferred Day</label>
+    <select name="entry.195751698">
+      <option>Sunday</option>
+      <option>monday</option>
+      <option>tuesday</option>
+      <option>wendesday</option>
+      <option>tuersday</option>
+    </select>
+    <button type="submit">Submit Response</button>
+  </form>
 
-      <label>Maximum Cost You Can Pay (ETB)</label>
-      <input type="number" name="entry.1663040019">
-
-      <label>Preferred Day</label>
-      <select name="entry.195751698">
-        <option>Saturday</option>
-        <option>Sunday</option>
-        <option>Weekday</option>
-      </select>
-
-      <button type="submit">Submit Response</button>
-    </form>
-
-    <div class="success" id="successMsg">
-      ✅ Your response has been submitted successfully. Thank you!
-    </div>
+  <div class="success" id="successMsg">
+    ✅ Your response has been submitted successfully. Thank you!
   </div>
+</div>
 
-  <script>
-    function handleSubmit() {
-      setTimeout(() => {
-        document.getElementById("tripForm").style.display = "none";
-        document.getElementById("successMsg").style.display = "block";
-      }, 500);
-    }
-  </script>
+<script>
+  const form = document.getElementById("tripForm");
+  const successMsg = document.getElementById("successMsg");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    fetch(
+      "https://docs.google.com/forms/d/e/1FAIpQLSeQWykRbnDbfITjDQU3DZnPGTeGGHg_GGODThxM7e3V-fp8Ag/formResponse",
+      {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      }
+    ).then(() => {
+      form.style.display = "none";
+      successMsg.style.display = "block";
+    });
+  });
+</script>
+
 </body>
 </html>
