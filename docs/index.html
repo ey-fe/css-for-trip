@@ -39,6 +39,12 @@
       background: #1e293b;
       color: #e5e7eb;
     }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 5px;
+    }
     textarea { resize: vertical; }
     button {
       margin-top: 20px;
@@ -74,14 +80,15 @@
     <input type="tel" name="entry.1404403395" required>
 
     <label>Do you agree with the trip idea?</label>
-    <div style="margin-top:5px;">
+    <div class="radio-group">
       <label>
-         <input type="radio" name="entry.1964980061" value="yes" required>  Yes
+         <input type="radio" name="entry.1964980061" value="yes" required> 
+        <span>Yes</span>
       </label>
-    </div>
-    <div>
+      
       <label>
-       <input type="radio" name="entry.1964980061" value="no"> No
+       <input type="radio" name="entry.1964980061" value="no">
+        <span>No</span>
       </label>
     </div>
     <label>Destination type</label>
@@ -146,4 +153,5 @@
 
 </body>
 </html>
+
 
