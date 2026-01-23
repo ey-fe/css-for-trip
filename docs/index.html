@@ -44,13 +44,15 @@
       background: #1e293b;
       color: #e5e7eb;
     }
+    textarea { resize: vertical; }
+
     .radio-group label {
       display: flex;
       align-items: center;
       gap: 6px;
       margin-top: 5px;
     }
-    textarea { resize: vertical; }
+
     button {
       margin-top: 20px;
       width: 100%;
@@ -62,6 +64,7 @@
       font-size: 16px;
       cursor: pointer;
     }
+
     .success {
       display: none;
       margin-top: 20px;
@@ -74,35 +77,37 @@
 
 <body>
 <div class="container">
-  <img src="trip-photo.png" alt="cs Refresh trip" class="trip-image">
+
+  <!-- IMAGE -->
+  <img src="trip-photo.png" alt="CS Refresh Trip" class="trip-image">
+
   <h1>CS Refresh Trip 2026 after internship</h1>
 
   <form id="tripForm">
 
+    <!-- NAME -->
     <label>Full Name</label>
     <input type="text" name="entry.1147428280" required>
 
+    <!-- PHONE -->
     <label>Phone Number</label>
     <input type="tel" name="entry.1404403395" required>
 
+    <!-- AGREE -->
     <label>Do you agree with the trip idea?</label>
     <div class="radio-group">
       <label>
-         <input type="radio"
-           name="entry.1964980061" 
-           value="Yes" 
-           required> 
+        <input type="radio" name="entry.1964980061" value="Yes" required>
         <span>Yes</span>
       </label>
-      
       <label>
-       <input type="radio"
-         name="entry.1964980061" 
-         value="No">
+        <input type="radio" name="entry.1964980061" value="No">
         <span>No</span>
       </label>
     </div>
-    <label>Destination type</label>
+
+    <!-- DESTINATION TYPE -->
+    <label>Destination Type</label>
     <select name="entry.1116604285" required>
       <option value="">-- Select --</option>
       <option>Natural place</option>
@@ -111,19 +116,24 @@
       <option>Other</option>
     </select>
 
-    <label>Preferred Destination (write exact place)</label>
+    <!-- DESTINATION NAME -->
+    <label>Preferred Destination (exact place)</label>
     <input type="text"
            name="entry.768237246"
            placeholder="e.g. Langano, Bishoftu"
            required>
 
+    <!-- ACTIVITIES -->
     <label>Preferred Activities</label>
     <textarea name="entry.513316649"
               placeholder="games, music, tennis, discussion..."></textarea>
 
+    <!-- COST -->
     <label>Maximum Cost (ETB)</label>
     <input type="number" name="entry.1663040019">
-    
+
+    <!-- DAY -->
+    <label>Preferred Day</label>
     <select name="entry.195751698" required>
       <option value="">-- Select day --</option>
       <option>Sunday</option>
@@ -131,14 +141,18 @@
       <option>Tuesday</option>
       <option>Wednesday</option>
       <option>Thursday</option>
+      <option>Friday</option>
+      <option>Saturday</option>
       <option>Any day is acceptable</option>
     </select>
+
     <button type="submit">Submit Response</button>
   </form>
 
   <div class="success" id="successMsg">
     ✅ Your response has been submitted successfully. Thank you!
   </div>
+
 </div>
 
 <script>
@@ -165,11 +179,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
