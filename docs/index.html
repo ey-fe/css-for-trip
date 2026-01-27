@@ -44,15 +44,21 @@
       background: #1e293b;
       color: #e5e7eb;
     }
-    textarea {
-      resize: vertical;
-    }
+    textarea { resize: vertical; }
+
     .radio-group label {
       display: flex;
       align-items: center;
       gap: 6px;
       margin-top: 5px;
     }
+
+    .error {
+      color: #f87171;
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
     button {
       margin-top: 20px;
       width: 100%;
@@ -64,6 +70,7 @@
       font-size: 16px;
       cursor: pointer;
     }
+
     .success {
       display: none;
       margin-top: 20px;
@@ -78,76 +85,66 @@
 
 <div class="container">
 
-  <!-- Hidden iframe (IMPORTANT) -->
+  <!-- hidden iframe -->
   <iframe name="hidden_iframe" style="display:none;"></iframe>
 
-  <!-- IMAGE -->
   <img src="trip-photo.png" alt="CS Refresh Trip" class="trip-image">
 
   <h1>CS Refresh Trip 2026 after internship</h1>
 
-  <!-- FORM -->
   <form
+    id="tripForm"
     action="https://docs.google.com/forms/d/e/1FAIpQLSeQWykRbnDbfITjDQU3DZnPGTeGGHg_GGODThxM7e3V-fp8Ag/formResponse"
     method="POST"
     target="hidden_iframe"
-    id="tripForm"
   >
 
     <!-- NAME -->
     <label>Full Name</label>
-    <input type="text" name="entry.1147428280" required>
+    <input type="text" id="name" name="entry.1147428280">
+    <div class="error" id="nameError"></div>
 
     <!-- PHONE -->
     <label>Phone Number</label>
-    <input type="tel" name="entry.1404403395" required>
+    <input type="tel" id="phone" name="entry.1404403395">
+    <div class="error" id="phoneError"></div>
 
     <!-- AGREE -->
     <label>Do you agree with the trip idea?</label>
     <div class="radio-group">
-      <label>
-        <input type="radio" name="entry.1964980061" value="Yes" required>
-        <span>Yes</span>
-      </label>
-      <label>
-        <input type="radio" name="entry.1964980061" value="No">
-        <span>No</span>
-      </label>
+      <label><input type="radio" name="entry.1964980061" value="Yes"> Yes</label>
+      <label><input type="radio" name="entry.1964980061" value="No"> No</label>
     </div>
+    <div class="error" id="agreeError"></div>
 
-    <!-- DESTINATION TYPE -->
+    <!-- DEST TYPE -->
     <label>Destination Type</label>
-    <select name="entry.1116604285" required>
+    <select id="destType" name="entry.1116604285">
       <option value="">-- Select --</option>
       <option>Natural place</option>
       <option>Resort</option>
       <option>Historical</option>
       <option>Other</option>
     </select>
+    <div class="error" id="destTypeError"></div>
 
-    <!-- DESTINATION NAME -->
+    <!-- DEST NAME -->
     <label>Preferred Destination (exact place)</label>
-    <input
-      type="text"
-      name="entry.768237246"
-      placeholder="e.g. Langano, Bishoftu"
-      required
-    >
+    <input type="text" id="destName" name="entry.768237246">
+    <div class="error" id="destNameError"></div>
 
     <!-- ACTIVITIES -->
     <label>Preferred Activities</label>
-    <textarea
-      name="entry.513316649"
-      placeholder="games, music, tennis, discussion..."
-    ></textarea>
+    <textarea name="entry.513316649"></textarea>
 
     <!-- COST -->
     <label>Maximum Cost (ETB)</label>
-    <input type="number" name="entry.1663040019">
+    <input type="number" id="cost" name="entry.1663040019">
+    <div class="error" id="costError"></div>
 
     <!-- DAY -->
     <label>Preferred Day</label>
-    <select name="entry.195751698" required>
+    <select id="day" name="entry.195751698">
       <option value="">-- Select day --</option>
       <option>Sunday</option>
       <option>Monday</option>
@@ -158,11 +155,11 @@
       <option>Saturday</option>
       <option>Any day is acceptable</option>
     </select>
+    <div class="error" id="dayError"></div>
 
     <button type="submit">Submit Response</button>
   </form>
 
-  <!-- SUCCESS MESSAGE -->
   <div class="success" id="successMsg">
     ✅ Your response has been submitted successfully. Thank you!
   </div>
@@ -173,7 +170,62 @@
   const form = document.getElementById("tripForm");
   const successMsg = document.getElementById("successMsg");
 
-  form.addEventListener("submit", () => {
+  function clearErrors() {
+    document.querySelectorAll(".error").forEach(e => e.textContent = "");
+  }
+
+  form.addEventListener("submit", function (e) {
+    clearErrors();
+    let valid = true;
+
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const agree = document.querySelector('input[name="entry.1964980061"]:checked');
+    const destType = document.getElementById("destType").value;
+    const destName = document.getElementById("destName").value.trim();
+    const cost = document.getElementById("cost").value;
+    const day = document.getElementById("day").value;
+
+    if (name.length < 3) {
+      document.getElementById("nameError").textContent = "Please enter your full name.";
+      valid = false;
+    }
+
+    if (!/^[0-9]{9,13}$/.test(phone)) {
+      document.getElementById("phoneError").textContent = "Enter a valid phone number.";
+      valid = false;
+    }
+
+    if (!agree) {
+      document.getElementById("agreeError").textContent = "Please select Yes or No.";
+      valid = false;
+    }
+
+    if (!destType) {
+      document.getElementById("destTypeError").textContent = "Select destination type.";
+      valid = false;
+    }
+
+    if (destName.length < 3) {
+      document.getElementById("destNameError").textContent = "Enter destination name.";
+      valid = false;
+    }
+
+    if (cost && cost <= 0) {
+      document.getElementById("costError").textContent = "Cost must be positive.";
+      valid = false;
+    }
+
+    if (!day) {
+      document.getElementById("dayError").textContent = "Select a preferred day.";
+      valid = false;
+    }
+
+    if (!valid) {
+      e.preventDefault();
+      return;
+    }
+
     setTimeout(() => {
       form.style.display = "none";
       successMsg.style.display = "block";
